@@ -6,7 +6,6 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 import { type BreadcrumbItem } from '@/types';
 
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -20,11 +19,11 @@ const breadcrumbItems: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="Appearance settings" />
 
-        <SettingsLayout>
+        <div class="p-4 sm:p-6 max-w-4xl space-y-6">
             <div class="space-y-6">
                 <HeadingSmall title="Appearance settings" description="Update your account's appearance settings" />
                 <AppearanceTabs />
             </div>
-        </SettingsLayout>
+        </div>
     </AppLayout>
 </template>

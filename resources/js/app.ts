@@ -23,8 +23,27 @@ declare module 'vite/client' {
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
+    title: (title) => {
+        if (!title) return appName;
+        const trimmed = title.trim();
+        if (trimmed === appName) return appName;
+        // Strip any existing trailing - appName or — appName to prevent double branding
+        const cleaned = trimmed.replace(new RegExp(`\\s*[-—]\\s*${appName}$`, 'i'), '');
+        return `${cleaned} - ${appName}`;
+    },
+    resolve: (name) => {
+        const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue');
+        const directPath = `./pages/${name}.vue`;
+        if (pages[directPath]) {
+            return pages[directPath]();
+        }
+        const lowerPath = directPath.toLowerCase();
+        const foundKey = Object.keys(pages).find((k) => k.toLowerCase() === lowerPath);
+        if (foundKey && pages[foundKey]) {
+            return pages[foundKey]();
+        }
+        return resolvePageComponent(directPath, pages);
+    },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)

@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
 interface Props {
@@ -46,7 +45,7 @@ const submit = () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Profile settings" />
 
-        <SettingsLayout>
+        <div class="p-4 sm:p-6 max-w-4xl space-y-6">
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
@@ -106,6 +105,6 @@ const submit = () => {
             </div>
 
             <DeleteUser />
-        </SettingsLayout>
+        </div>
     </AppLayout>
 </template>
